@@ -254,6 +254,20 @@ insert into sys_menu values('1058', '生成修改', '115', '2',  '#', '',  'F', 
 insert into sys_menu values('1059', '生成删除', '115', '3',  '#', '',  'F', '0', '1', 'tool:gen:remove',   '#', 'admin', sysdate(), '', null, '');
 insert into sys_menu values('1060', '预览代码', '115', '4',  '#', '',  'F', '0', '1', 'tool:gen:preview',  '#', 'admin', sysdate(), '', null, '');
 insert into sys_menu values('1061', '生成代码', '115', '5',  '#', '',  'F', '0', '1', 'tool:gen:code',     '#', 'admin', sysdate(), '', null, '');
+-- 覆盖率服务菜单
+insert into sys_menu values('2000', '环境配置', '2012', '1', '/server/config', 'menuItem', 'C', '0', '1', 'server:config:view', '#', 'admin',  sysdate(), 'admin', null, '环境配置菜单');
+insert into sys_menu values('2001', '环境配置查询', '2000', '1', '#', '', 'F', '0', '1', 'server:config:list', '#', 'admin',sysdate(), '', NULL, '');
+insert into sys_menu values('2002', '环境配置新增', '2000', '2', '#', '', 'F', '0', '1', 'server:config:add', '#', 'admin', sysdate(), '', NULL, '');
+insert into sys_menu values('2003', '环境配置修改', '2000', '3', '#', '', 'F', '0', '1', 'server:config:edit', '#', 'admin', sysdate(), '', NULL, '');
+insert into sys_menu values('2004', '环境配置删除', '2000', '4', '#', '', 'F', '0', '1', 'server:config:remove', '#', 'admin', sysdate(), '', NULL, '');
+insert into sys_menu values('2005', '环境配置导出', '2000', '5', '#', '', 'F', '0', '1', 'server:config:export', '#', 'admin', sysdate(), '', NULL, '');
+insert into sys_menu values('2006', '报告管理', '2012', '1', '/server/report', 'menuItem', 'C', '0', '1', 'server:report:view', '#', 'admin', sysdate(), 'admin', sysdate(), '代码覆盖率服务菜单');
+insert into sys_menu values('2007', '代码覆盖率服务查询', '2006', '1', '#', '', 'F', '0', '1', 'server:report:list', '#', 'admin', sysdate(), '', NULL, '');
+insert into sys_menu values('2008', '代码覆盖率服务新增', '2006', '2', '#', '', 'F', '0', '1', 'server:report:add', '#', 'admin', sysdate(), '', NULL, '');
+insert into sys_menu values('2009', '代码覆盖率服务修改', '2006', '3', '#', '', 'F', '0', '1', 'server:report:edit', '#', 'admin', sysdate(), '', NULL, '');
+insert into sys_menu values('2010', '代码覆盖率服务删除', '2006', '4', '#', '', 'F', '0', '1', 'server:report:remove', '#', 'admin', sysdate(), '', NULL, '');
+insert into sys_menu values('2011', '代码覆盖率服务导出', '2006', '5', '#', '', 'F', '0', '1', 'server:report:export', '#', 'admin', sysdate(), '', NULL, '');
+insert into sys_menu values('2012', '代码覆盖率', '0', '1', '#', 'menuItem', 'M', '0', '1', NULL, 'fa fa-bar-chart', 'admin', sysdate(), '', NULL, '');
 
 
 -- ----------------------------
@@ -725,20 +739,6 @@ ncrement=1 comment = '代码生成业务表字段';
 -- ----------------------------
 -- 21、Jtest业务表
 -- ----------------------------
-
-INSERT INTO `jtest`.`sys_menu` (`menu_id`, `menu_name`, `parent_id`, `order_num`, `url`, `target`, `menu_type`, `visible`, `is_refresh`, `perms`, `icon`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`) VALUES (2000, '环境配置', 2012, 1, '/server/config', 'menuItem', 'C', '0', '1', 'server:config:view', '#', 'admin', '2024-09-02 14:01:28', 'admin', '2024-09-02 16:15:13', '环境配置菜单');
-INSERT INTO `jtest`.`sys_menu` (`menu_id`, `menu_name`, `parent_id`, `order_num`, `url`, `target`, `menu_type`, `visible`, `is_refresh`, `perms`, `icon`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`) VALUES (2001, '环境配置查询', 2000, 1, '#', '', 'F', '0', '1', 'server:config:list', '#', 'admin', '2024-09-02 14:01:29', '', NULL, '');
-INSERT INTO `jtest`.`sys_menu` (`menu_id`, `menu_name`, `parent_id`, `order_num`, `url`, `target`, `menu_type`, `visible`, `is_refresh`, `perms`, `icon`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`) VALUES (2002, '环境配置新增', 2000, 2, '#', '', 'F', '0', '1', 'server:config:add', '#', 'admin', '2024-09-02 14:01:29', '', NULL, '');
-INSERT INTO `jtest`.`sys_menu` (`menu_id`, `menu_name`, `parent_id`, `order_num`, `url`, `target`, `menu_type`, `visible`, `is_refresh`, `perms`, `icon`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`) VALUES (2003, '环境配置修改', 2000, 3, '#', '', 'F', '0', '1', 'server:config:edit', '#', 'admin', '2024-09-02 14:01:29', '', NULL, '');
-INSERT INTO `jtest`.`sys_menu` (`menu_id`, `menu_name`, `parent_id`, `order_num`, `url`, `target`, `menu_type`, `visible`, `is_refresh`, `perms`, `icon`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`) VALUES (2004, '环境配置删除', 2000, 4, '#', '', 'F', '0', '1', 'server:config:remove', '#', 'admin', '2024-09-02 14:01:29', '', NULL, '');
-INSERT INTO `jtest`.`sys_menu` (`menu_id`, `menu_name`, `parent_id`, `order_num`, `url`, `target`, `menu_type`, `visible`, `is_refresh`, `perms`, `icon`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`) VALUES (2005, '环境配置导出', 2000, 5, '#', '', 'F', '0', '1', 'server:config:export', '#', 'admin', '2024-09-02 14:01:29', '', NULL, '');
-INSERT INTO `jtest`.`sys_menu` (`menu_id`, `menu_name`, `parent_id`, `order_num`, `url`, `target`, `menu_type`, `visible`, `is_refresh`, `perms`, `icon`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`) VALUES (2006, '报告管理', 2012, 1, '/server/report', 'menuItem', 'C', '0', '1', 'server:report:view', '#', 'admin', '2024-09-02 14:01:39', 'admin', '2024-09-02 16:22:07', '代码覆盖率服务菜单');
-INSERT INTO `jtest`.`sys_menu` (`menu_id`, `menu_name`, `parent_id`, `order_num`, `url`, `target`, `menu_type`, `visible`, `is_refresh`, `perms`, `icon`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`) VALUES (2007, '代码覆盖率服务查询', 2006, 1, '#', '', 'F', '0', '1', 'server:report:list', '#', 'admin', '2024-09-02 14:01:39', '', NULL, '');
-INSERT INTO `jtest`.`sys_menu` (`menu_id`, `menu_name`, `parent_id`, `order_num`, `url`, `target`, `menu_type`, `visible`, `is_refresh`, `perms`, `icon`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`) VALUES (2008, '代码覆盖率服务新增', 2006, 2, '#', '', 'F', '0', '1', 'server:report:add', '#', 'admin', '2024-09-02 14:01:39', '', NULL, '');
-INSERT INTO `jtest`.`sys_menu` (`menu_id`, `menu_name`, `parent_id`, `order_num`, `url`, `target`, `menu_type`, `visible`, `is_refresh`, `perms`, `icon`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`) VALUES (2009, '代码覆盖率服务修改', 2006, 3, '#', '', 'F', '0', '1', 'server:report:edit', '#', 'admin', '2024-09-02 14:01:39', '', NULL, '');
-INSERT INTO `jtest`.`sys_menu` (`menu_id`, `menu_name`, `parent_id`, `order_num`, `url`, `target`, `menu_type`, `visible`, `is_refresh`, `perms`, `icon`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`) VALUES (2010, '代码覆盖率服务删除', 2006, 4, '#', '', 'F', '0', '1', 'server:report:remove', '#', 'admin', '2024-09-02 14:01:39', '', NULL, '');
-INSERT INTO `jtest`.`sys_menu` (`menu_id`, `menu_name`, `parent_id`, `order_num`, `url`, `target`, `menu_type`, `visible`, `is_refresh`, `perms`, `icon`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`) VALUES (2011, '代码覆盖率服务导出', 2006, 5, '#', '', 'F', '0', '1', 'server:report:export', '#', 'admin', '2024-09-02 14:01:39', '', NULL, '');
-INSERT INTO `jtest`.`sys_menu` (`menu_id`, `menu_name`, `parent_id`, `order_num`, `url`, `target`, `menu_type`, `visible`, `is_refresh`, `perms`, `icon`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`) VALUES (2012, '代码覆盖率', 0, 1, '#', 'menuItem', 'M', '0', '1', NULL, 'fa fa-bar-chart', 'admin', '2024-09-02 16:14:52', '', NULL, '');
 
 DROP TABLE IF EXISTS `coverage_env_config`;
 CREATE TABLE `coverage_env_config`  (
