@@ -139,7 +139,7 @@ public class CoverageReportServiceImpl implements ICoverageReportService {
                 .diffCodeFiles(env.getDiffCodeFile())
                 .build();
         report.setCreateTime(new Date());
-        report.setUpdateBy(ShiroUtils.getLoginName());
+        report.setCreateBy(ShiroUtils.getLoginName());
         String indexHtml = env.getLastReportDir() + File.separator + "index.html";
         try {
             analySumerReport(indexHtml, report);
