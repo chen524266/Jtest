@@ -764,6 +764,7 @@ CREATE TABLE `coverage_env_config`  (
   PRIMARY KEY (`config_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '环境配置' ROW_FORMAT = Dynamic;
 
+DROP TABLE IF EXISTS `coverage_report`;
 CREATE TABLE `coverage_report`  (
   `report_id` int NOT NULL AUTO_INCREMENT COMMENT '报告id',
   `app_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '应用名称',
