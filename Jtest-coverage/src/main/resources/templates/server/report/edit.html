@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改代码覆盖率服务')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-report-edit" th:object="${coverageReport}">
+            <input name="reportId" th:field="*{reportId}" type="hidden">
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">仓库地址：</label>
+                    <div class="col-sm-8">
+                        <input name="repositoryUrl" th:field="*{repositoryUrl}" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">起始版本：</label>
+                    <div class="col-sm-8">
+                        <input name="versionStart" th:field="*{versionStart}" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">当前版本：</label>
+                    <div class="col-sm-8">
+                        <input name="versionNow" th:field="*{versionNow}" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">exec文件路径：</label>
+                    <div class="col-sm-8">
+                        <input name="exec" th:field="*{exec}" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">report文件夹路径：</label>
+                    <div class="col-sm-8">
+                        <input name="reportDir" th:field="*{reportDir}" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">指令覆盖率：</label>
+                    <div class="col-sm-8">
+                        <input name="instructionCounter" th:field="*{instructionCounter}" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">分支覆盖率：</label>
+                    <div class="col-sm-8">
+                        <input name="branchCounter" th:field="*{branchCounter}" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">行覆盖率：</label>
+                    <div class="col-sm-8">
+                        <input name="lineCounter" th:field="*{lineCounter}" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">类覆盖率：</label>
+                    <div class="col-sm-8">
+                        <input name="classCounter" th:field="*{classCounter}" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var prefix = ctx + "server/report";
+        $("#form-report-edit").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/edit", $('#form-report-edit').serialize());
+            }
+        }
+    </script>
+</body>
+</html>

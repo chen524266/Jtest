@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('代码覆盖率服务列表')"/>
+</head>
+<body class="gray-bg">
+<div class="container-div">
+    <div class="row">
+        <div class="col-sm-12 search-collapse">
+            <form id="formId">
+                <div class="select-list">
+                    <ul>
+
+                        <li>
+                            <label>报告Id：</label>
+                            <input id="reportId" type="text" name="reportId"/>
+                        </li>
+                        <li>
+                            <label>应用名称：</label>
+                            <input type="text" name="appName"/>
+                        </li>
+
+                        <li>
+                            <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i
+                                    class="fa fa-search"></i>&nbsp;搜索</a>
+                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i
+                                    class="fa fa-refresh"></i>&nbsp;重置</a>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+
+        <div class="btn-group-sm" id="toolbar" role="group">
+            <a class="btn btn-primary single disabled" onclick="$.operate.edit()"
+               shiro:hasPermission="server:report:edit">
+                <i class="fa fa-edit"></i> 修改
+            </a>
+            <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()"
+               shiro:hasPermission="server:report:remove">
+                <i class="fa fa-remove"></i> 删除
+            </a>
+            <a class="btn btn-info" onclick="mergeReports()">
+                <i class="fa fa-exchange"></i> 合并报告
+            </a>
+            <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="server:report:export">
+                <i class="fa fa-download"></i> 导出
+            </a>
+        </div>
+        <div class="col-sm-12 select-table table-striped">
+            <table id="bootstrap-table"></table>
+        </div>
+    </div>
+</div>
+<th:block th:include="include :: footer"/>
+<script th:inline="javascript">
+    var editFlag = [[${@permission.hasPermi('server:report:edit')}]];
+    var removeFlag = [[${@permission.hasPermi('server:report:remove')}]];
+    var prefix = ctx + "server/report";
+
+    $(function () {
+        var options = {
+            url: prefix + "/list",
+            createUrl: prefix + "/add",
+            updateUrl: prefix + "/edit/{id}",
+            removeUrl: prefix + "/remove",
+            exportUrl: prefix + "/export",
+            mergeReportsUrl: prefix + "/mergerReports",
+            modalName: "代码覆盖率服务",
+            columns: [{
+                checkbox: true
+            },
+                {
+                    field: 'reportId',
+                    title: '报告id',
+                    visible: false
+                },
+                {
+                    field: 'appName',
+                    title: '应用'
+                },
+                {
+                    field: 'repositoryUrl',
+                    title: '仓库地址'
+                },
+                {
+                    field: 'versionStart',
+                    title: '起始版本',
+                    width: '5%',
+                },
+                {
+                    field: 'versionNow',
+                    title: '当前版本',
+                    width: '5%',
+                },
+                {
+                    field: 'reportDir',
+                    title: 'report文件夹路径'
+                },
+                {
+                    field: 'branchCounter',
+                    title: '分支覆盖率'
+                },
+                {
+                    field: 'lineCounter',
+                    title: '行覆盖率'
+                },
+                {
+                    field: 'classCounter',
+                    title: '类覆盖率'
+                },
+                {
+                    field: 'createTime',
+                    title: '创建时间',
+                    sortable:true
+                },
+                {
+                    field: 'createBy',
+                    title: '创建人'
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function (value, row, index) {
+                        return '<a href="#" onclick="createMenuItem(\'' + row.reportHref + '\')"><i></i>查看报告</a> ';
+                    }
+                }]
+        };
+        $.table.init(options);
+    });
+
+    /** 创建选项卡 */
+    function createMenuItem(dataUrl) {
+        menuName = dataUrl
+        dataIndex = $.common.random(1, 100),
+            flag = true;
+        if (dataUrl == undefined || $.trim(dataUrl).length == 0) return false;
+        var topWindow = $(window.parent.document);
+        // 创建选项卡带了参数时，data-id唯一标识截取？前的字符
+        var dataId = "";
+        if (dataUrl.indexOf('?') >= 0) {
+            dataId = dataUrl.substring(dataUrl.indexOf('?'), dataUrl.length);
+        } else {
+            dataId = dataUrl;
+        }
+        // 选项卡菜单已存在
+        $('.menuTab', topWindow).each(function () {
+            console.log("thisdataId=" + $(this).data('id'));
+            if ($(this).data('id') == dataId) {
+                //选项卡菜单已存在先关闭，再重新打开
+                $(this).remove();
+            }
+        });
+
+        // 选项卡菜单不存在
+        if (flag) {
+            var str = '<a href="javascript:;" class="active menuTab" data-id="' + dataId + '">' + menuName + ' <i class="fa fa-times-circle"></i></a>';
+            $('.menuTab', topWindow).removeClass('active');
+            // 添加选项卡对应的iframe
+            var str1 = '<iframe class="Jtest_iframe" name="iframe' + dataIndex + '" width="100%" height="100%" src="' + dataUrl + '" frameborder="0" data-id="' + dataId + '" seamless></iframe>';
+            $('.mainContent', topWindow).find('iframe.Jtest_iframe').hide().parents('.mainContent').append(str1);
+            // 添加选项卡
+            $('.menuTabs .page-tabs-content', topWindow).append(str);
+        }
+        return false;
+    }
+
+    function mergeReports() {
+        var rows = $.table.selectColumns("reportId");
+        if (rows.length <=1) {
+            $.modal.alertWarning("合并报告至少需要两条记录！");
+            return;
+        }
+        $.modal.confirm("需要合并" + rows.length + "条数据吗?", function() {
+            var url = prefix + "/mergerReports?ids=" + rows;
+            var data ='';
+            var config = {
+                url: url,
+                type: 'post',
+                dataType: 'json',
+                data: data,
+                beforeSend: function () {
+                    $.modal.loading("正在合并中，请稍后...");
+                },
+                success: function (result) {
+                    $("#reportId").val(result.msg)
+                    $.table.search()
+                    $.modal.closeLoading();
+                }
+            };
+            $.ajax(config)
+        });
+    }
+
+</script>
+
+</body>
+</html>

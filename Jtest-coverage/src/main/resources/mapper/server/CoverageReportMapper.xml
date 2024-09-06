@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jtest.coverage.server.mapper.CoverageReportMapper">
+    <resultMap type="CoverageReport" id="CoverageReportResult">
+        <result property="reportId" column="report_id"/>
+        <result property="appName" column="app_name"/>
+        <result property="repositoryUrl" column="repository_url"/>
+        <result property="versionStart" column="version_start"/>
+        <result property="versionNow" column="version_now"/>
+        <result property="exec" column="exec"/>
+        <result property="reportDir" column="report_dir"/>
+        <result property="instructionCounter" column="instruction_counter"/>
+        <result property="branchCounter" column="branch_counter"/>
+        <result property="lineCounter" column="line_counter"/>
+        <result property="classCounter" column="class_counter"/>
+        <result property="createBy" column="create_by"/>
+        <result property="reportHref" column="report_href"/>
+        <result property="configId" column="config_id"/>
+        <result property="classFiles" column="class_files"/>
+        <result property="sourceFiles" column="source_files"/>
+        <result property="diffCodeFiles" column="diff_code_files"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="selectCoverageReportVo">
+        select report_id, app_name, repository_url, version_start, version_now, exec, report_dir, instruction_counter, branch_counter, line_counter, class_counter, create_by, report_href, config_id, class_files, source_files,diff_code_files, create_time, update_time from coverage_report
+    </sql>
+
+    <select id="selectCoverageReportList" parameterType="CoverageReport" resultMap="CoverageReportResult">
+        <include refid="selectCoverageReportVo"/>
+        <where>
+            <if test="reportId != null">and report_id= #{reportId}</if>
+            <if test="appName != null  and appName != ''">and app_name like concat('%', #{appName}, '%')</if>
+            <if test="repositoryUrl != null  and repositoryUrl != ''">and repository_url = #{repositoryUrl}</if>
+            <if test="versionStart != null  and versionStart != ''">and version_start = #{versionStart}</if>
+            <if test="versionNow != null  and versionNow != ''">and version_now = #{versionNow}</if>
+            <if test="exec != null  and exec != ''">and exec = #{exec}</if>
+            <if test="reportDir != null  and reportDir != ''">and report_dir = #{reportDir}</if>
+            <if test="instructionCounter != null  and instructionCounter != ''">and instruction_counter =
+                #{instructionCounter}
+            </if>
+            <if test="branchCounter != null  and branchCounter != ''">and branch_counter = #{branchCounter}</if>
+            <if test="lineCounter != null  and lineCounter != ''">and line_counter = #{lineCounter}</if>
+            <if test="classCounter != null  and classCounter != ''">and class_counter = #{classCounter}</if>
+            <if test="reportHref != null  and reportHref != ''">and report_href = #{reportHref}</if>
+            <if test="configId != null ">and config_id = #{configId}</if>
+            <if test="classFiles != null  and classFiles != ''">and class_files = #{classFiles}</if>
+            <if test="sourceFiles != null  and sourceFiles != ''">and source_files = #{sourceFiles}</if>
+            <if test="diffCodeFiles != null  and diffCodeFiles != ''">and diff_code_files = #{diffCodeFiles}</if>
+
+        </where>
+    </select>
+
+    <select id="selectCoverageReportByReportId" parameterType="Integer" resultMap="CoverageReportResult">
+        <include refid="selectCoverageReportVo"/>
+        where report_id = #{reportId}
+    </select>
+
+    <insert id="insertCoverageReport" parameterType="CoverageReport" useGeneratedKeys="true" keyProperty="reportId">
+        insert into coverage_report
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="appName != null">app_name,</if>
+            <if test="repositoryUrl != null">repository_url,</if>
+            <if test="versionStart != null">version_start,</if>
+            <if test="versionNow != null">version_now,</if>
+            <if test="exec != null">exec,</if>
+            <if test="reportDir != null">report_dir,</if>
+            <if test="instructionCounter != null">instruction_counter,</if>
+            <if test="branchCounter != null">branch_counter,</if>
+            <if test="lineCounter != null">line_counter,</if>
+            <if test="classCounter != null">class_counter,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="reportHref != null">report_href,</if>
+            <if test="configId != null">config_id,</if>
+            <if test="classFiles != null">class_files,</if>
+            <if test="sourceFiles != null">source_files,</if>
+            <if test="diffCodeFiles != null">diff_code_files,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="appName != null">#{appName},</if>
+            <if test="repositoryUrl != null">#{repositoryUrl},</if>
+            <if test="versionStart != null">#{versionStart},</if>
+            <if test="versionNow != null">#{versionNow},</if>
+            <if test="exec != null">#{exec},</if>
+            <if test="reportDir != null">#{reportDir},</if>
+            <if test="instructionCounter != null">#{instructionCounter},</if>
+            <if test="branchCounter != null">#{branchCounter},</if>
+            <if test="lineCounter != null">#{lineCounter},</if>
+            <if test="classCounter != null">#{classCounter},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="reportHref != null">#{reportHref},</if>
+            <if test="configId != null">#{configId},</if>
+            <if test="classFiles != null">#{classFiles},</if>
+            <if test="sourceFiles != null">#{sourceFiles},</if>
+            <if test="diffCodeFiles != null">#{diffCodeFiles},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateCoverageReport" parameterType="CoverageReport">
+        update coverage_report
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="appName != null">app_name = #{appName},</if>
+            <if test="repositoryUrl != null">repository_url = #{repositoryUrl},</if>
+            <if test="versionStart != null">version_start = #{versionStart},</if>
+            <if test="versionNow != null">version_now = #{versionNow},</if>
+            <if test="exec != null">exec = #{exec},</if>
+            <if test="reportDir != null">report_dir = #{reportDir},</if>
+            <if test="instructionCounter != null">instruction_counter = #{instructionCounter},</if>
+            <if test="branchCounter != null">branch_counter = #{branchCounter},</if>
+            <if test="lineCounter != null">line_counter = #{lineCounter},</if>
+            <if test="classCounter != null">class_counter = #{classCounter},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="reportHref != null">report_href = #{reportHref},</if>
+            <if test="configId != null">config_id = #{configId},</if>
+            <if test="classFiles != null">class_files = #{classFiles},</if>
+            <if test="sourceFiles != null">source_files = #{sourceFiles},</if>
+            <if test="diffCodeFiles != null">diff_code_files = #{diffCodeFiles},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where report_id = #{reportId}
+    </update>
+
+    <delete id="deleteCoverageReportByReportId" parameterType="Integer">
+        delete from coverage_report where report_id = #{reportId}
+    </delete>
+
+    <delete id="deleteCoverageReportByReportIds" parameterType="String">
+        delete from coverage_report where report_id in
+        <foreach item="reportId" collection="array" open="(" separator="," close=")">
+            #{reportId}
+        </foreach>
+    </delete>
+
+</mapper>

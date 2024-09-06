@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jtest.coverage.server.mapper.CoverageEnvConfigMapper">
+    
+    <resultMap type="CoverageEnvConfig" id="CoverageEnvConfigResult">
+        <result property="configId"    column="config_id"    />
+        <result property="clientName"    column="client_name"    />
+        <result property="appName"    column="app_name"    />
+        <result property="ip"    column="ip"    />
+        <result property="port"    column="port"    />
+        <result property="repositoryUrl"    column="repository_url"    />
+        <result property="name"    column="name"    />
+        <result property="password"    column="password"    />
+        <result property="coverageType"    column="coverage_type"    />
+        <result property="sourceFiles"    column="source_files"    />
+        <result property="classFiles"    column="class_files"    />
+        <result property="versionStart"    column="version_start"    />
+        <result property="versionNow"    column="version_now"    />
+        <result property="enableScheduled"    column="enable_scheduled"    />
+        <result property="corn"    column="corn"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="lastReportDir"    column="last_report_dir"    />
+
+    </resultMap>
+
+    <sql id="selectCoverageEnvConfigVo">
+        select config_id, client_name, app_name, ip, port, repository_url, name, password, coverage_type,source_files,class_files, version_start, version_now, enable_scheduled, corn, create_by, create_time, update_time,last_report_dir from coverage_env_config
+    </sql>
+
+    <select id="selectCoverageEnvConfigList" parameterType="CoverageEnvConfig" resultMap="CoverageEnvConfigResult">
+        <include refid="selectCoverageEnvConfigVo"/>
+        <where>  
+            <if test="clientName != null  and clientName != ''"> and client_name like concat('%', #{clientName}, '%')</if>
+            <if test="appName != null  and appName != ''"> and app_name like concat('%', #{appName}, '%')</if>
+            <if test="ip != null  and ip != ''"> and ip = #{ip}</if>
+            <if test="port != null  and port != ''"> and port = #{port}</if>
+            <if test="repositoryUrl != null  and repositoryUrl != ''"> and repository_url = #{repositoryUrl}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="password != null  and password != ''"> and password = #{password}</if>
+            <if test="coverageType != null  and coverageType != ''"> and coverage_type = #{coverageType}</if>
+            <if test="versionStart != null  and versionStart != ''"> and version_start = #{versionStart}</if>
+            <if test="versionNow != null  and versionNow != ''"> and version_now = #{versionNow}</if>
+            <if test="enableScheduled != null "> and enable_scheduled = #{enableScheduled}</if>
+            <if test="corn != null  and corn != ''"> and corn = #{corn}</if>
+        </where>
+    </select>
+    
+    <select id="selectCoverageEnvConfigByConfigId" parameterType="Integer" resultMap="CoverageEnvConfigResult">
+        <include refid="selectCoverageEnvConfigVo"/>
+        where config_id = #{configId}
+    </select>
+
+    <insert id="insertCoverageEnvConfig" parameterType="CoverageEnvConfig" useGeneratedKeys="true" keyProperty="configId">
+        insert into coverage_env_config
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="clientName != null">client_name,</if>
+            <if test="appName != null">app_name,</if>
+            <if test="ip != null">ip,</if>
+            <if test="port != null">port,</if>
+            <if test="repositoryUrl != null">repository_url,</if>
+            <if test="name != null">name,</if>
+            <if test="password != null">password,</if>
+            <if test="coverageType != null">coverage_type,</if>
+            <if test="sourceFiles != null">source_files,</if>
+            <if test="classFiles != null">class_files,</if>
+            <if test="versionStart != null">version_start,</if>
+            <if test="versionNow != null">version_now,</if>
+            <if test="enableScheduled != null">enable_scheduled,</if>
+            <if test="corn != null">corn,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="lastReportDir != null">last_report_dir,</if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="clientName != null">#{clientName},</if>
+            <if test="appName != null">#{appName},</if>
+            <if test="ip != null">#{ip},</if>
+            <if test="port != null">#{port},</if>
+            <if test="repositoryUrl != null">#{repositoryUrl},</if>
+            <if test="name != null">#{name},</if>
+            <if test="password != null">#{password},</if>
+            <if test="coverageType != null">#{coverageType},</if>
+            <if test="sourceFiles != null">#{sourceFiles},</if>
+            <if test="classFiles != null">#{classFiles},</if>
+
+            <if test="versionStart != null">#{versionStart},</if>
+            <if test="versionNow != null">#{versionNow},</if>
+            <if test="enableScheduled != null">#{enableScheduled},</if>
+            <if test="corn != null">#{corn},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="lastReportDir != null">#{lastReportDir},</if>
+
+        </trim>
+    </insert>
+
+    <update id="updateCoverageEnvConfig" parameterType="CoverageEnvConfig">
+        update coverage_env_config
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="clientName != null">client_name = #{clientName},</if>
+            <if test="appName != null">app_name = #{appName},</if>
+            <if test="ip != null">ip = #{ip},</if>
+            <if test="port != null">port = #{port},</if>
+            <if test="repositoryUrl != null">repository_url = #{repositoryUrl},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="password != null">password = #{password},</if>
+            <if test="coverageType != null">coverage_type = #{coverageType},</if>
+            <if test="versionStart != null">version_start = #{versionStart},</if>
+            <if test="versionNow != null">version_now = #{versionNow},</if>
+            <if test="enableScheduled != null">enable_scheduled = #{enableScheduled},</if>
+            <if test="corn != null">corn = #{corn},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="sourceFiles != null">source_files=#{sourceFiles},</if>
+            <if test="classFiles != null">class_files=#{classFiles},</if>
+            <if test="lastReportDir != null">last_report_dir=#{lastReportDir},</if>
+
+        </trim>
+        where config_id = #{configId}
+    </update>
+
+    <delete id="deleteCoverageEnvConfigByConfigId" parameterType="Integer">
+        delete from coverage_env_config where config_id = #{configId}
+    </delete>
+
+    <delete id="deleteCoverageEnvConfigByConfigIds" parameterType="String">
+        delete from coverage_env_config where config_id in 
+        <foreach item="configId" collection="array" open="(" separator="," close=")">
+            #{configId}
+        </foreach>
+    </delete>
+
+</mapper>

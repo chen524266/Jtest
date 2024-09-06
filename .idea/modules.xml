@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Jtest-admin/Jtest-admin.iml" filepath="$PROJECT_DIR$/Jtest-admin/Jtest-admin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Jtest-common/Jtest-common.iml" filepath="$PROJECT_DIR$/Jtest-common/Jtest-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Jtest-coverage/Jtest-coverage.iml" filepath="$PROJECT_DIR$/Jtest-coverage/Jtest-coverage.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Jtest-framework/Jtest-framework.iml" filepath="$PROJECT_DIR$/Jtest-framework/Jtest-framework.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Jtest-generator/Jtest-generator.iml" filepath="$PROJECT_DIR$/Jtest-generator/Jtest-generator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Jtest-quartz/Jtest-quartz.iml" filepath="$PROJECT_DIR$/Jtest-quartz/Jtest-quartz.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Jtest-system/Jtest-system.iml" filepath="$PROJECT_DIR$/Jtest-system/Jtest-system.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/jtest_realse.iml" filepath="$PROJECT_DIR$/.idea/jtest_realse.iml" />
+    </modules>
+  </component>
+</project>

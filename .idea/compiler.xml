@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="Jtest-system" />
+        <module name="Jtest-framework" />
+        <module name="Jtest-coverage" />
+        <module name="Jtest-generator" />
+        <module name="Jtest-admin" />
+        <module name="Jtest-quartz" />
+        <module name="Jtest-common" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Jtest-admin" target="1.8" />
+      <module name="Jtest-common" target="1.8" />
+      <module name="Jtest-coverage" target="1.8" />
+      <module name="Jtest-framework" target="1.8" />
+      <module name="Jtest-generator" target="1.8" />
+      <module name="Jtest-quartz" target="1.8" />
+      <module name="Jtest-system" target="1.8" />
+      <module name="jtest_realse" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

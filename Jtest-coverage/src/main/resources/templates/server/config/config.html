@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('环境配置列表')"/>
+</head>
+<body class="gray-bg">
+<div class="container-div">
+    <div class="row">
+        <div class="col-sm-12 search-collapse">
+            <form id="formId">
+                <div class="select-list">
+                    <ul>
+                        <li>
+                            <label>应用名称：</label>
+                            <input type="text" name="appName"/>
+                        </li>
+                        <li>
+                            <label>ip地址：</label>
+                            <input type="text" name="ip"/>
+                        </li>
+                        <li>
+                            <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i
+                                    class="fa fa-search"></i>&nbsp;搜索</a>
+                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i
+                                    class="fa fa-refresh"></i>&nbsp;重置</a>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+
+        <div class="btn-group-sm" id="toolbar" role="group">
+            <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="server:config:add">
+                <i class="fa fa-plus"></i> 添加
+            </a>
+            <a class="btn btn-primary single disabled" onclick="$.operate.edit()"
+               shiro:hasPermission="server:config:edit">
+                <i class="fa fa-edit"></i> 修改
+            </a>
+            <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()"
+               shiro:hasPermission="server:config:remove">
+                <i class="fa fa-remove"></i> 删除
+            </a>
+            <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="server:config:export">
+                <i class="fa fa-download"></i> 导出
+            </a>
+        </div>
+        <div class="col-sm-12 select-table table-striped">
+            <table id="bootstrap-table"></table>
+        </div>
+    </div>
+</div>
+<th:block th:include="include :: footer"/>
+<script th:inline="javascript">
+    var editFlag = [[${@permission.hasPermi('server:config:edit')}]];
+    var removeFlag = [[${@permission.hasPermi('server:config:remove')}]];
+    var prefix = ctx + "server/config";
+
+    $(function () {
+        var options = {
+            url: prefix + "/list",
+            createUrl: prefix + "/add",
+            updateUrl: prefix + "/edit/{id}",
+            removeUrl: prefix + "/remove",
+            exportUrl: prefix + "/export",
+            modalName: "环境配置",
+            columns: [{
+                checkbox: true
+            },
+                {
+                    field: 'configId',
+                    title: '主键id',
+                    visible: false
+                },
+                {
+                    field: 'clientName',
+                    title: '客户端名称'
+                },
+                {
+                    field: 'appName',
+                    title: '应用名称'
+                },
+                {
+                    field: 'ip',
+                    title: 'ip地址'
+                },
+                {
+                    field: 'port',
+                    title: '端口'
+                },
+                {
+                    field: 'repositoryUrl',
+                    title: '仓库地址'
+                },
+                {
+                    field: 'coverageType',
+                    title: '覆盖率类型'
+                },
+                {
+                    field: 'versionStart',
+                    title: '起始版本'
+                },
+                {
+                    field: 'versionNow',
+                    title: '当前版本'
+                },
+                {
+                    field: 'lastReportDir',
+                    title: '最近一次报告',
+                    formatter: function (value, row, index) {
+                        return '<a href="#" onclick="createMenuItem(\'' + row.lastReportDir + '\')"><i></i>查看报告</a> ';
+                    }
+                },
+                {
+                    field: 'createBy',
+                    title: '创建人'
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function (value, row, index) {
+                        var actions = [];
+                        // actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.configId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        // actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.configId + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.post(\'' + prefix + '/report/' + row.configId + '\')"><i class="fa fa-creative-commons"></i>生成报告</a> ');
+                        return actions.join('');
+                    }
+                }]
+        };
+        $.table.init(options);
+    });
+
+    /** 创建选项卡 */
+    function createMenuItem(dataUrl) {
+        menuName = dataUrl
+        dataIndex = $.common.random(1, 100),
+            flag = true;
+        if (dataUrl == undefined || $.trim(dataUrl).length == 0) return false;
+        var topWindow = $(window.parent.document);
+        // 创建选项卡带了参数时，data-id唯一标识截取？前的字符
+        var dataId = "";
+        if (dataUrl.indexOf('?') >= 0) {
+            dataId = dataUrl.substring(dataUrl.indexOf('?'), dataUrl.length);
+        } else {
+            dataId = dataUrl;
+        }
+        // 选项卡菜单已存在
+        $('.menuTab', topWindow).each(function () {
+            console.log("thisdataId=" + $(this).data('id'));
+            if ($(this).data('id') == dataId) {
+                //选项卡菜单已存在先关闭，再重新打开
+                $(this).remove();
+            }
+        });
+
+        // 选项卡菜单不存在
+        if (flag) {
+            var str = '<a href="javascript:;" class="active menuTab" data-id="' + dataId + '">' + menuName + ' <i class="fa fa-times-circle"></i></a>';
+            $('.menuTab', topWindow).removeClass('active');
+            // 添加选项卡对应的iframe
+            var str1 = '<iframe class="Jtest_iframe" name="iframe' + dataIndex + '" width="100%" height="100%" src="' + dataUrl + '" frameborder="0" data-id="' + dataId + '" seamless></iframe>';
+            $('.mainContent', topWindow).find('iframe.Jtest_iframe').hide().parents('.mainContent').append(str1);
+            // 添加选项卡
+            $('.menuTabs .page-tabs-content', topWindow).append(str);
+        }
+        return false;
+    }
+</script>
+</body>
+</html>
