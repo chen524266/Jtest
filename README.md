@@ -19,11 +19,12 @@
    源码相对路径和class文件相对路径，根路径为仓库下载的路径，这部分功能可以根据公司项目特点自己改造。目前的做法是在克隆好
    仓库后，对仓库进行编译，编译完成的class有可能和运行时可能有不一样的classId导致覆盖率获取失败。如出现这种情况，可以手动把class文件放入到配置的路径中。
    或者修改我开源的agent的从远程下载jar包的方法，或者也可以找我定制这部分的功能。
-   
+   ![输入图片说明](1e1bd8424e8381e8da3fcdf6d45383d6.png)
 2、报告管理
 
-   支持查看报告和支持合并报告，jacoco-cli使用的是我另一个开源项目https://gitee.com/chen_zai_xing/jacoco，
+   支持查看报告和支持合并报告，jacoco-cli使用的是我另一个开源项目[https://gitee.com/chen_zai_xing/jacoco](http://gitee.com/chen_zai_xing/jacoco)
    支持了不同classId的覆盖率合并功能。
+![输入图片说明](22.png)
   
 ##部署方法
    在配置的数据库中执行sql目录下的Jtest_20240906.sql和quartz.sql
@@ -33,6 +34,9 @@
    
    
    开源不易，如对您有帮助有富裕的可以请作者喝一杯咖啡~
+   ![输入图片说明](354acabea4c80034007c289ddf94a675.jpg)
+
+   ![输入图片说明](4398a12a661740fa5663d10b122e283b.jpg)
    
 
 
